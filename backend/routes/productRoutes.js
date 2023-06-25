@@ -1,13 +1,15 @@
 import express from 'express';
+// Immediately call express.Router()
 const router = express.Router();
+import {
+  getProducts,
+  getProductById,
+} from '../controllers/productController.js';
 
-router.get('/', (req, res) => {
-  res.json(products);
-});
+// Connect the root route to the getProducts controller
+router.route('/').get(getProducts);
 
-router.get('/:id', (req, res) => {
-  const product = products.find((p) => p._id === req.params.id);
-  res.json(product);
-});
+// Connect a route with a product id to the getProductById controller
+router.route('/:id').get(getProductById);
 
 export default router;
