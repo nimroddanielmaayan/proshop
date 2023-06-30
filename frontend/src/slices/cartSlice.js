@@ -4,7 +4,7 @@ import { updateCart } from '../utils/cartUtils';
 // If there's a cart in local storage, then parse it from string to JSON and store it in a variable, otherwise set it to an empty array and store it in a variable
 const initialState = localStorage.getItem('cart')
   ? JSON.parse(localStorage.getItem('cart'))
-  : { cartItems: [] };
+  : { cartItems: [], shippingAddress: {}, paymentMethod: 'PayPal' };
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -33,11 +33,27 @@ const cartSlice = createSlice({
 
       return updateCart(state);
     },
+
+    // Set the shipping address
+    saveShippingAddress: (state, action) => {
+      state.shippingAddress = action.payload;
+
+      return updateCart(state);
+    },
+    savePaymentMethod: (state, action) => {
+      state.paymentMethod = action.payload;
+      return updateCart(state);
+    },
   },
 });
 
 // We need to export addToCart as an action
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  saveShippingAddress,
+  savePaymentMethod,
+} = cartSlice.actions;
 
 // In addition, we need to export the cartSlice reducer
 export default cartSlice.reducer;
