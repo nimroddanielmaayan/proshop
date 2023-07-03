@@ -87,3 +87,10 @@ const orderSchema = mongoose.Schema(
 const Order = mongoose.model('Order', orderSchema);
 
 export default Order;
+
+/* About the Order schema: */
+
+// q: is Order a class?
+// a: no, it's a model
+// q: what's the difference?
+// a: a model is a class with which we construct documents
