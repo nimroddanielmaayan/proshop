@@ -16,8 +16,8 @@ const cartSlice = createSlice({
       // Check if the item is already in the cart
       const existItem = state.cartItems.find((x) => x._id === item._id);
 
+      // If the item is already in the cart, then update the quantity
       if (existItem) {
-        // If the item is already in the cart, then update the quantity
         state.cartItems = state.cartItems.map((x) =>
           x._id === existItem._id ? item : x
         );
@@ -26,32 +26,29 @@ const cartSlice = createSlice({
         state.cartItems = [...state.cartItems, item];
       }
 
-      return updateCart(state);
+      return updateCart(state, item);
     },
     removeFromCart: (state, action) => {
       state.cartItems = state.cartItems.filter((x) => x._id !== action.payload);
-
       return updateCart(state);
     },
-
     // Set the shipping address
     saveShippingAddress: (state, action) => {
       state.shippingAddress = action.payload;
-
-      return updateCart(state);
+      localStorage.setItem('cart', JSON.stringify(state));
     },
     savePaymentMethod: (state, action) => {
       state.paymentMethod = action.payload;
-      return updateCart(state);
+      localStorage.setItem('cart', JSON.stringify(state));
     },
     clearCartItems: (state, action) => {
       state.cartItems = [];
-      return updateCart(state);
+      localStorage.setItem('cart', JSON.stringify(state));
     },
   },
 });
 
-// We need to export addToCart as an action
+// We need to export the cart actions
 export const {
   addToCart,
   removeFromCart,
@@ -63,9 +60,7 @@ export const {
 // In addition, we need to export the cartSlice reducer
 export default cartSlice.reducer;
 
-/* ------------------------------------------------------------ */
-
-/* cartSlice.js - Notes: */
+/* cartSlice.js - General Notes: */
 
 // Note: The API slices don't use createSlice but rather createApi, because they are API slices, not "regular" slices
 

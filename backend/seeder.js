@@ -10,7 +10,8 @@ import Product from './models/productModel.js';
 import Order from './models/orderModel.js';
 import connectDB from './config/db.js';
 
-dotenv.config(); // This allows us to use the .env file
+// This allows us to use the .env file
+dotenv.config();
 
 connectDB();
 
@@ -27,7 +28,7 @@ const importData = async () => {
     // Get the admin user
     const adminUser = createdUsers[0]._id;
 
-    // Add the admin user to the products
+    // Add the admin user as the creator of the products
     const sampleProducts = products.map((product) => {
       return { ...product, user: adminUser };
     });
@@ -35,28 +36,28 @@ const importData = async () => {
     // Insert the products
     await Product.insertMany(sampleProducts);
 
-    // The .green.inverse/.red.inverse part is done using the colors package
+    // The .green.inverse/.red.inverse part is done using the "colors" package
     console.log('Data Imported!'.green.inverse);
     process.exit();
   } catch (error) {
     console.error(`${error}`.red.inverse);
-    process.exit(1); // Exit with failure
+    // Exit with failure
+    process.exit(1);
   }
 };
 
 const destroyData = async () => {
   try {
-    // Clear the database by calling a deleteMany() method on each model
     await Order.deleteMany();
     await Product.deleteMany();
     await User.deleteMany();
 
-    // The .green.inverse/.red.inverse part is done using the colors package
     console.log('Data Destroyed!'.red.inverse);
     process.exit();
   } catch (error) {
     console.error(`${error}`.red.inverse);
-    process.exit(1); // Exit with failure
+    // Exit with failure
+    process.exit(1);
   }
 };
 

@@ -27,11 +27,13 @@ const userSchema = mongoose.Schema(
   }
 );
 
+// Match user entered password to hashed password in database
+// Use bcrypt to compare the entered password with the hashed password of the current user
 userSchema.methods.matchPassword = async function (enteredPassword) {
-  // Use bcrypt to compare the entered password with the hashed password of the current user
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
+// Encrypt password using bcrypt
 // userSchema.pre does something before saving the user to the database
 userSchema.pre('save', async function (next) {
   // If the password is not modified, move on to the next middleware

@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import FormContainer from '../components/FormContainer';
 import Loader from '../components/Loader';
+import FormContainer from '../components/FormContainer';
+
 import { useRegisterMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
 import { toast } from 'react-toastify';
@@ -29,13 +30,13 @@ const RegisterScreen = () => {
     if (userInfo) {
       navigate(redirect);
     }
-  }, [userInfo, redirect, navigate]);
+  }, [navigate, redirect, userInfo]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
       toast.error('Passwords do not match');
-      return;
     } else {
       try {
         const res = await register({ name, email, password }).unwrap();
@@ -49,20 +50,19 @@ const RegisterScreen = () => {
 
   return (
     <FormContainer>
-      <h1>Sign Up</h1>
-
+      <h1>Register</h1>
       <Form onSubmit={submitHandler}>
-        <Form.Group controlId='name' className='my-3'>
+        <Form.Group className='my-2' controlId='name'>
           <Form.Label>Name</Form.Label>
           <Form.Control
-            type='text'
+            type='name'
             placeholder='Enter name'
             value={name}
             onChange={(e) => setName(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group controlId='email' className='my-3'>
+        <Form.Group className='my-2' controlId='email'>
           <Form.Label>Email Address</Form.Label>
           <Form.Control
             type='email'
@@ -72,7 +72,7 @@ const RegisterScreen = () => {
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group controlId='password' className='my-3'>
+        <Form.Group className='my-2' controlId='password'>
           <Form.Label>Password</Form.Label>
           <Form.Control
             type='password'
@@ -81,9 +81,8 @@ const RegisterScreen = () => {
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
-
-        <Form.Group controlId='confirmPassword' className='my-3'>
-          <Form.Label>Confirm password</Form.Label>
+        <Form.Group className='my-2' controlId='confirmPassword'>
+          <Form.Label>Confirm Password</Form.Label>
           <Form.Control
             type='password'
             placeholder='Confirm password'
@@ -92,12 +91,7 @@ const RegisterScreen = () => {
           ></Form.Control>
         </Form.Group>
 
-        <Button
-          type='submit'
-          variant='primary'
-          className='mt-2'
-          disabled={isLoading}
-        >
+        <Button disabled={isLoading} type='submit' variant='primary'>
           Register
         </Button>
 

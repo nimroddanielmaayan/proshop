@@ -2,8 +2,7 @@
 
 // Instead of using this kind of custom middleware, it's possible to use the express-async-handler package
 
-const asyncHandler = (fn) => (req, res, next) => {
+const asyncHandler = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next);
-};
 
 export default asyncHandler;

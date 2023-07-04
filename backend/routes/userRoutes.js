@@ -1,6 +1,5 @@
 import express from 'express';
 // Immediately call express.Router()
-const router = express.Router();
 import {
   authUser,
   registerUser,
@@ -9,7 +8,7 @@ import {
   updateUserProfile,
   getUsers,
   deleteUser,
-  getUserByID,
+  getUserById,
   updateUser,
 } from '../controllers/userController.js';
 import { protect, admin } from '../middleware/authMiddleware.js';
@@ -18,9 +17,11 @@ import { protect, admin } from '../middleware/authMiddleware.js';
 // These functions won't be called immediately, they will be set as the callback function for the route
 // Some of the routes have middleware, like "protect" and "admin"
 
+const router = express.Router();
+
 router.route('/').post(registerUser).get(protect, admin, getUsers);
-router.post('/logout', logoutUser);
 router.post('/auth', authUser);
+router.post('/logout', logoutUser);
 router
   .route('/profile')
   .get(protect, getUserProfile)
@@ -28,7 +29,7 @@ router
 router
   .route('/:id')
   .delete(protect, admin, deleteUser)
-  .get(protect, admin, getUserByID)
+  .get(protect, admin, getUserById)
   .put(protect, admin, updateUser);
 
 export default router;
