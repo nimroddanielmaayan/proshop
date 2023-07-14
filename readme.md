@@ -6,6 +6,8 @@
 
 <!-- toc -->
 
+## Table of Contents
+
 - [Features](#features)
 - [Usage](#usage)
   - [Env Variables](#env-variables)
