@@ -4,6 +4,8 @@
 
 Live version: https://proshop-rbv6.onrender.com
 
+Screenshot:
+
 <img src="./frontend/public/images/screen.png">
 
 <!-- toc -->
