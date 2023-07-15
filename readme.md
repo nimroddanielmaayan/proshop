@@ -1,6 +1,6 @@
 # ProShop eCommerce Platform
 
-### eCommerce platform built with the MERN stack & Redux.
+### eCommerce platform built with the MERN stack & Redux
 
 Live version: https://proshop-rbv6.onrender.com
 
